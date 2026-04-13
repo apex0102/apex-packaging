@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .clock {
+            text-align: center;
+            margin: 10px;
+        }
+        .city {
+            font-size: 2rem;
+        }
+        .time {
+            font-size: 1.5rem;
+        }
+        @media (max-width: 600px) {
+            .city {
+                font-size: 1.5rem;
+            }
+            .time {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Digital Clock</h1>
+    <div id="clocks"></div>
+    <script>
+        const timeZones = {
+            "New York": "America/New_York",
+            "London": "Europe/London",
+            "Tokyo": "Asia/Tokyo",
+            "Dubai": "Asia/Dubai",
+            "Sydney": "Australia/Sydney",
+            "India": "Asia/Kolkata"
+        };
+
+        function updateClocks() {
+            const clocksDiv = document.getElementById('clocks');
+            clocksDiv.innerHTML = '';
+
+            for (const [city, timeZone] of Object.entries(timeZones)) {
+                const date = new Date().toLocaleString('en-US', { timeZone });
+                const [datePart, timePart] = date.split(', ');
+                const timeString = `${timePart}`;
+
+                const clockDiv = document.createElement('div');
+                clockDiv.className = 'clock';
+                clockDiv.innerHTML = `<div class='city'>${city}</div><div class='time'>${timeString}</div>`;
+                clocksDiv.appendChild(clockDiv);
+            }
+        }
+
+        setInterval(updateClocks, 1000);
+        updateClocks();
+    </script>
+</body>
+</html>
